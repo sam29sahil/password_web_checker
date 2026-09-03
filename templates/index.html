@@ -58,9 +58,14 @@
             <code>{{ cracked_password }}</code>
         {% else %}
             <h3>❌ No Password Found</h3>
-            <p>{{ crack_message }}</p>
         {% endif %}
-        <p class="info"><strong>Note:</strong> Cryptographic hashes are one-way functions. This tool does not “convert” a hash back into a password; it tests a small demo dictionary of candidate passwords and reports a match when one exists.</p>
+        <p>{{ crack_message }}</p>
+        <p class="info"><strong>How this works:</strong> Cryptographic hashes are one-way functions. The application tests candidate passwords from a dictionary and reports a match when the candidate produces the supplied hash.</p>
+        {% if config_backend %}
+        <p class="info"><strong>Cracking backend:</strong> Azure-hosted dictionary service.</p>
+        {% else %}
+        <p class="info"><strong>Cracking backend:</strong> Local demo dictionary. Configure <code>CRACK_BACKEND_URL</code> to use the Azure backend.</p>
+        {% endif %}
     </div>
     {% endif %}
 </div>
