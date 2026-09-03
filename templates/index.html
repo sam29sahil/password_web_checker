@@ -2,173 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>☠️ Horror Password Tool</title>
-    <!-- Creepy Font -->
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
-
     <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            background: black;
-            color: #ff0000;
-            font-family: 'Creepster', cursive;
-            overflow-x: hidden;
-            text-shadow: 0 0 10px red, 0 0 20px darkred;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 60px auto;
-            background: rgba(20, 0, 0, 0.9);
-            padding: 30px;
-            border: 3px solid red;
-            border-radius: 10px;
-            box-shadow: 0 0 30px crimson, inset 0 0 20px darkred;
-        }
-
-        h2 {
-            text-align: center;
-            font-size: 40px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px crimson, 0 0 40px red;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 12px 0;
-            background: black;
-            border: 2px solid red;
-            color: #ff4444;
-            font-size: 16px;
-            font-family: monospace;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background: darkred;
-            border: 2px solid red;
-            color: white;
-            font-size: 18px;
-            text-transform: uppercase;
-            cursor: pointer;
-            font-family: 'Creepster', cursive;
-            text-shadow: 0 0 5px black;
-        }
-
-        button:hover {
-            background: red;
-            color: black;
-            text-shadow: 0 0 10px white;
-        }
-
-        .result {
-            margin-top: 20px;
-            padding: 15px;
-            border: 2px solid red;
-            background: rgba(50, 0, 0, 0.9);
-            box-shadow: 0 0 15px crimson;
-        }
-
-        .feedback {
-            color: #ff8888;
-            margin-top: 10px;
-        }
-
-        code {
-            background: black;
-            border: 1px solid red;
-            display: block;
-            padding: 5px;
-            margin-top: 5px;
-            word-wrap: break-word;
-            color: #ff4444;
-            font-family: monospace;
-        }
-
-        hr {
-            border: none;
-            height: 2px;
-            background: red;
-            margin: 30px 0;
-            box-shadow: 0 0 10px red;
-        }
-
-        /* Blood dripping effect */
-        .blood-drip {
-            position: relative;
-            color: red;
-        }
-        .blood-drip::after {
-            content: " ";
-            position: absolute;
-            left: 50%;
-            top: 100%;
-            width: 10px;
-            height: 30px;
-            background: red;
-            border-radius: 50%;
-            animation: drip 1.5s infinite;
-        }
-        @keyframes drip {
-            0% { transform: translateY(0); opacity: 1; }
-            80% { transform: translateY(20px); opacity: 0.5; }
-            100% { transform: translateY(30px); opacity: 0; }
-        }
+        body { margin:0; min-height:100vh; background:black; color:#ff0000; font-family:'Creepster',cursive; overflow-x:hidden; text-shadow:0 0 10px red,0 0 20px darkred; }
+        .container { max-width:700px; margin:60px auto; background:rgba(20,0,0,.9); padding:30px; border:3px solid red; border-radius:10px; box-shadow:0 0 30px crimson,inset 0 0 20px darkred; }
+        h2 { text-align:center; font-size:40px; margin-bottom:20px; text-shadow:0 0 20px crimson,0 0 40px red; }
+        input { box-sizing:border-box; width:100%; padding:12px; margin:12px 0; background:black; border:2px solid red; color:#ff4444; font-size:16px; font-family:monospace; }
+        button { width:100%; padding:12px; background:darkred; border:2px solid red; color:white; font-size:18px; text-transform:uppercase; cursor:pointer; font-family:'Creepster',cursive; text-shadow:0 0 5px black; }
+        button:hover { background:red; color:black; text-shadow:0 0 10px white; }
+        .result { margin-top:20px; padding:15px; border:2px solid red; background:rgba(50,0,0,.9); box-shadow:0 0 15px crimson; }
+        .feedback { color:#ff8888; margin-top:10px; }
+        .info { color:#ffaaaa; font-family:Arial,sans-serif; font-size:14px; line-height:1.5; text-shadow:none; }
+        code { background:black; border:1px solid red; display:block; padding:5px; margin-top:5px; word-wrap:break-word; color:#ff4444; font-family:monospace; }
+        hr { border:none; height:2px; background:red; margin:30px 0; box-shadow:0 0 10px red; }
+        .blood-drip { position:relative; color:red; }
+        .blood-drip::after { content:" "; position:absolute; left:50%; top:100%; width:10px; height:30px; background:red; border-radius:50%; animation:drip 1.5s infinite; }
+        @keyframes drip { 0%{transform:translateY(0);opacity:1} 80%{transform:translateY(20px);opacity:.5} 100%{transform:translateY(30px);opacity:0} }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2 class="blood-drip">☠️ Horror Password Tool</h2>
-        
-        <!-- Normal password → Hash -->
-        <form method="POST">
-            <input type="password" name="password" placeholder="Enter your cursed password..." required>
-            <button type="submit">Summon Hash</button>
-        </form>
+<div class="container">
+    <h2 class="blood-drip">☠️ Horror Password Tool</h2>
 
-        {% if result %}
-        <div class="result">
-            <h3>Strength of Your Soul: {{ result }}</h3>
-            {% if feedback %}
-                <div class="feedback">
-                    <strong>Whispers from the Void:</strong>
-                    <ul>
-                        {% for f in feedback %}
-                            <li>{{ f }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
+    <form method="POST">
+        <input type="password" name="password" placeholder="Enter your cursed password..." required>
+        <button type="submit">Summon Hash</button>
+    </form>
 
-            <h4>🔮 Dark Hashes:</h4>
-            <p><strong>SHA256:</strong></p>
-            <code>{{ hash_result.sha256 }}</code>
-            <p><strong>Bcrypt:</strong></p>
-            <code>{{ hash_result.bcrypt }}</code>
-        </div>
+    {% if result %}
+    <div class="result">
+        <h3>Strength of Your Soul: {{ result }}</h3>
+        {% if feedback %}
+        <div class="feedback"><strong>Whispers from the Void:</strong><ul>{% for f in feedback %}<li>{{ f }}</li>{% endfor %}</ul></div>
         {% endif %}
-
-        <hr>
-
-        <!-- Hash → Try to Crack -->
-        <form method="POST">
-            <input type="text" name="hash_input" placeholder="Enter a SHA256 hash to break the curse..." required>
-            <button type="submit">Try to Resurrect</button>
-        </form>
-
-        {% if cracked_password %}
-            <div class="result">
-                {% if cracked_password == None %}
-                    <p>❌ The spirits whisper: No match found in the Book of RockYou...</p>
-                {% else %}
-                    <p>✅ The forbidden secret revealed: <strong>{{ cracked_password }}</strong></p>
-                {% endif %}
-            </div>
-        {% endif %}
+        <h4>🔮 Dark Hashes:</h4>
+        <p><strong>SHA256:</strong></p><code>{{ hash_result.sha256 }}</code>
+        <p><strong>Bcrypt:</strong></p><code>{{ hash_result.bcrypt }}</code>
     </div>
+    {% endif %}
+
+    <hr>
+
+    <form method="POST">
+        <input type="text" name="hash_input" placeholder="Enter a SHA256 or bcrypt hash..." required>
+        <button type="submit">Try to Resurrect</button>
+    </form>
+
+    {% if crack_message %}
+    <div class="result">
+        {% if cracked_password %}
+            <h3>✅ Password Found</h3>
+            <p>The candidate matching this hash is:</p>
+            <code>{{ cracked_password }}</code>
+        {% else %}
+            <h3>❌ No Password Found</h3>
+            <p>{{ crack_message }}</p>
+        {% endif %}
+        <p class="info"><strong>Note:</strong> Cryptographic hashes are one-way functions. This tool does not “convert” a hash back into a password; it tests a small demo dictionary of candidate passwords and reports a match when one exists.</p>
+    </div>
+    {% endif %}
+</div>
 </body>
 </html>
-
