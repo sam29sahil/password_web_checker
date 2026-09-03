@@ -188,6 +188,7 @@ def index():
         hash_result=hash_result,
         cracked_password=cracked_password,
         crack_message=crack_message,
+        config_backend=bool(os.getenv("CRACK_BACKEND_URL")),
     )
 
 
